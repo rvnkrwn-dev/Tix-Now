@@ -100,7 +100,7 @@ export interface LogType {
 }
 
 export enum ActionLog {
-    REGISTER = 'REGISTER',
+    LOGOUT = 'LOGOUT',
     LOGIN = 'LOGIN',
     CREATE = 'CREATE',
     UPDATE = 'UPDATE',

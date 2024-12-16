@@ -10,9 +10,6 @@ export default defineEventHandler(async (event) => {
     try {
         const data: LoginRequest = await readBody(event);
 
-
-
-        // Check if user exists
         const user = await User.getUserByEmail(data.email);
 
         if (!user) {
@@ -20,14 +17,12 @@ export default defineEventHandler(async (event) => {
             return { code: 400, message: 'Kesalahan Kredensial' };
         }
 
-        // Check password
         const isPasswordValid = bcrypt.compareSync(data.password, user.password);
         if (!isPasswordValid) {
             setResponseStatus(event, 400);
             return { code: 400, message: 'Kesalahan Kredensial' };
         }
 
-        // Generate tokens
         const { refreshToken, accessToken } = generateToken({
             id: user.id,
             email: user.email,
@@ -36,10 +31,8 @@ export default defineEventHandler(async (event) => {
 
         const { password, ...userData } = user;
 
-        // Store refresh token in the database
         await RefreshToken.create(user.id, refreshToken);
 
-        // Set refresh token in cookie
         sendRefreshToken(event, refreshToken);
 
         const payload : LogRequest = {
@@ -50,7 +43,6 @@ export default defineEventHandler(async (event) => {
 
         await createLog(payload)
 
-        // Return access token in response
         return <LoginResponse> {
             code: 200,
             message: 'Berhasil Masuk!',
@@ -63,7 +55,7 @@ export default defineEventHandler(async (event) => {
         console.error('Gagal Masuk:', error);
         return sendError(
             event,
-            createError({ statusCode: 500, statusMessage: error.message || 'Internal Server Error' }),
+            createError({ statusCode: 500, message: error.message || 'Internal Server Error' }),
         );
     }
 });

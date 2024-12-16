@@ -2,14 +2,13 @@ import {prisma} from "~/server/config/db";
 import {RegisterRequest, UpdateUserRequest} from "~/types/AuthType";
 
 export class User {
-    static createUser = (data: any ) => {
+    static createUser = (data: RegisterRequest ) => {
         return prisma.user.create({
             data: {
                 full_name: data.full_name,
                 username: data.username,
                 email: data.email,
                 password: data.password,
-                role: data?.role,
             },
         });
     };
@@ -35,7 +34,14 @@ export class User {
                     username: data.username,
                     email: data.email,
                     password: data.password,
-                }
+                },
+            select: {
+                id: true,
+                full_name: true,
+                email: true,
+                password: false,
+                role: true,
+            }
         });
     };
 
@@ -64,6 +70,14 @@ export class User {
     static getUserById = (id: number) => {
         return prisma.user.findUnique({
             where: {id: id},
+            select: {
+                id: true,
+                full_name: true,
+                username: true,
+                email: true,
+                password: false,
+                role: true,
+            },
         });
     };
 
