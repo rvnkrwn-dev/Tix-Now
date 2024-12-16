@@ -43,4 +43,4 @@ export default defineEventHandler(async (event) => {
             createError({statusCode: 500, message: error?.message || 'Internal Server Error'})
         );
     }
-});git
+});
