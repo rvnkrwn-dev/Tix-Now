@@ -13,6 +13,17 @@ export default defineEventHandler( async (event) => {
             '/api/auth/users/search?q=:q',
             '/api/auth/users?page=:page&pagesize=:pagesize',
             '/api/auth/logs?page=:page&pagesize=:pagesize',
+            '/api/auth/categories',
+            '/api/auth/categories/:id',
+            '/api/auth/categories?page=:page&pagesize=:pagesize',
+            '/api/auth/categories/search?q=:q',
+            '/api/auth/tickets',
+            '/api/auth/tickets/:id',
+            '/api/auth/tickets?page=:page&pagesize=:pagesize',
+            '/api/auth/tickets/search?q=:q',
+            '/api/auth/transactions',
+            '/api/auth/transactions/:id',
+            '/api/auth/transactions?page=:page&pagesize=:pagesize',
         ]
 
         const isHandledByThisMiddleware = endpoints.some(endopoint => {

@@ -74,7 +74,6 @@ export interface TransactionRequest {
     user_id: number;
     total_ticket: number;
     total: number;
-    status: TransactionStatus;
 }
 
 // Detail Transaction Request Interface

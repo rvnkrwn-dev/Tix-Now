@@ -2,7 +2,6 @@ import nodemailer, { TransportOptions } from "nodemailer";
 
 const config = useRuntimeConfig()
 
-// Konfigurasi email server
 export const configOptionsMailer: TransportOptions | any = {
     host: config.SMTP_HOST ?? undefined,
     port: config.SMTP_PORT ?? undefined,
