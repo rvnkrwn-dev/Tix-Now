@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  full_name     String
+  username      String         @unique
+  email         String         @unique
+  password      String
+  role          Role           @default(USER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  Transactions  Transaction[]
+  RefreshTokens RefreshToken[]
+  Logs          Log[]
+}
+
+model Ticket {
+  id                 Int                 @id @default(autoincrement())
+  slug               String              @unique
+  title              String
+  description        String
+  location           String
+  dateTime           DateTime
+  stock              Int
+  price              Float
+  categoryId         Int
+  imageUrl           String
+  secureUrl          String
+  publicId           String
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  Category           Category            @relation(fields: [categoryId], references: [id])
+  DetailTransactions DetailTransaction[]
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Tickets     Ticket[]
+}
+
+model Transaction {
+  id          Int                 @id @default(autoincrement())
+  userId      Int
+  totalTicket Int
+  total       Float
+  status      TransactionStatus
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  user        User                @relation(fields: [userId], references: [id])
+  details     DetailTransaction[]
+}
+
+model DetailTransaction {
+  id            Int         @id @default(autoincrement())
+  transactionId Int
+  ticketId      Int
+  quantity      Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  ticket        Ticket      @relation(fields: [ticketId], references: [id])
+}
+
+model RefreshToken {
+  id            Int      @id @default(autoincrement())
+  user_id       Int
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  refresh_token String   @db.VarChar(1024)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+}
+
+model Log {
+  id          Int       @id @default(autoincrement())
+  user_id     Int
+  user        User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  action      ActionLog
+  description String    @db.Text
+  created_at  DateTime  @default(now())
+}
+
+enum ActionLog {
+  REGISTER
+  LOGIN
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELED
+}
