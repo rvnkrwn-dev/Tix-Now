@@ -148,7 +148,6 @@
 </template>
 
 <script setup lang="ts">
-import {debounce} from 'lodash';
 // Define the props
 const props = defineProps({
   title: {
@@ -204,9 +203,9 @@ const handleDelete = async (id: number) => {
   emits('deleteData', id)
 }
 
-const handleSearch = debounce(async () => {
+const handleSearch = async () => {
   emits('searchData', searchText.value);
-}, 500);
+}
 
 watch(searchText, handleSearch)
 </script>
