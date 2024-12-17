@@ -1,19 +1,13 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { prisma } from '~/server/config/db';
-import { RefreshToken } from '~/server/model/RefreshToken';
-
-const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN!;
 
 export default defineEventHandler(async (event) => {
     try {
-        const { newPassword, confirmNewPassword } = await readBody(event);
-        const token = event.node.req.url?.split('token=')[1];
-        console.log('Token:', token);
+        const { email, otp, newPassword, confirmNewPassword } = await readBody(event);
 
-        if (!token || !newPassword || !confirmNewPassword) {
+        if (!email || !otp || !newPassword || !confirmNewPassword) {
             setResponseStatus(event, 400);
-            return { code: 400, message: 'Dibutuhkan semua inputan' };
+            return { code: 400, message: 'Semua inputan diperlukan' };
         }
 
         if (newPassword !== confirmNewPassword) {
@@ -21,26 +15,17 @@ export default defineEventHandler(async (event) => {
             return { code: 400, message: 'Kata sandi tidak sama' };
         }
 
-        const tokenInDb = await RefreshToken.findToken(token);
-        if (!tokenInDb) {
-            setResponseStatus(event, 403);
-            return { code: 403, message: 'Tidak valid atau token sudah kadaluarsa' };
-        }
-
-        let decoded: any;
-        try {
-            decoded = jwt.verify(token, REFRESH_TOKEN_SECRET);
-        } catch (error) {
-            setResponseStatus(event, 403);
-            return { code: 403, message: 'Tidak valid atau token sudah kadaluarsa' };
-        }
-
         const user = await prisma.user.findUnique({
-            where: { id: decoded.id }
+            where: { email }
         });
         if (!user) {
             setResponseStatus(event, 403);
-            return { code: 403, message: 'Pengguna tidak valid dengan pengguna' };
+            return { code: 403, message: 'Pengguna tidak ditemukan' };
+        }
+
+        if (user.otp !== parseInt(otp, 10)) {
+            setResponseStatus(event, 403);
+            return { code: 403, message: 'OTP tidak valid atau sudah kadaluarsa' };
         }
 
         const isPasswordSame = bcrypt.compareSync(newPassword, user.password);
@@ -53,10 +38,8 @@ export default defineEventHandler(async (event) => {
 
         await prisma.user.update({
             where: { id: user.id },
-            data: { password: hashedPassword }
+            data: { password: hashedPassword, otp: null }
         });
-
-        await RefreshToken.deleteToken(token);
 
         return { code: 200, message: 'Kata sandi telah berhasil diatur ulang.' };
 
