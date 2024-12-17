@@ -257,20 +257,6 @@
                         Tambah
                       </NuxtLink>
                     </li>
-                    <li>
-                      <NuxtLink
-                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                          to="/admin/categories/edit" active-class="bg-gray-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                             stroke-linejoin="round" class="lucide lucide-pencil">
-                          <path
-                              d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
-                          <path d="m15 5 4 4"/>
-                        </svg>
-                        Ubah
-                      </NuxtLink>
-                    </li>
                   </ul>
                 </div>
               </li>
@@ -334,6 +320,79 @@
                       <NuxtLink
                           class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
                           to="/admin/tickets/edit" active-class="bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-pencil">
+                          <path
+                              d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                          <path d="m15 5 4 4"/>
+                        </svg>
+                        Ubah
+                      </NuxtLink>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
+              <li class="hs-accordion" id="transactions-accordion">
+                <button type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                        aria-expanded="true" aria-controls="transactions-accordion-child">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-right"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg>
+                  Transaksi
+
+                  <svg class="hs-accordion-active:block ms-auto hidden size-4" xmlns="http://www.w3.org/2000/svg"
+                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m18 15-6-6-6 6"/>
+                  </svg>
+
+                  <svg class="hs-accordion-active:hidden ms-auto block size-4" xmlns="http://www.w3.org/2000/svg"
+                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </button>
+
+                <div id="transactions-accordion-child"
+                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
+                     role="region" aria-labelledby="transactions-accordion">
+                  <ul class="ps-4 pt-1 mt-2 space-y-1 border-l-2 ml-4">
+                    <li>
+                      <NuxtLink
+                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                          to="/admin/transactions" active-class="bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-list">
+                          <path d="M3 12h.01"/>
+                          <path d="M3 18h.01"/>
+                          <path d="M3 6h.01"/>
+                          <path d="M8 12h13"/>
+                          <path d="M8 18h13"/>
+                          <path d="M8 6h13"/>
+                        </svg>
+                        Daftar
+                      </NuxtLink>
+                    </li>
+                    <li>
+                      <NuxtLink
+                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                          to="/admin/transactions/add" active-class="bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-circle-plus">
+                          <circle cx="12" cy="12" r="10"/>
+                          <path d="M8 12h8"/>
+                          <path d="M12 8v8"/>
+                        </svg>
+                        Tambah
+                      </NuxtLink>
+                    </li>
+                    <li>
+                      <NuxtLink
+                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                          to="/admin/transactions/edit" active-class="bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                              stroke-linejoin="round" class="lucide lucide-pencil">

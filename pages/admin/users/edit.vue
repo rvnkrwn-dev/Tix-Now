@@ -112,7 +112,7 @@
             <!-- Jika tidak ada pengguna yang dipilih, tampilkan combobox pencarian -->
             <div v-else>
               <label for="hs-combobox-basic-usage" class="block text-sm font-medium mb-2 w-full">Cari Pengguna</label>
-              <ComboBox @selectedUser="handleSelectedUser"/>
+              <ComboBoxUser @selectedUser="handleSelectedUser"/>
             </div>
           </div>
         </div>
@@ -123,6 +123,7 @@
 
 <script setup lang="ts">
 import type {User} from "~/types/TypesModel";
+import ComboBoxUser from "~/components/ComboBoxUser.vue";
 
 definePageMeta({
   layout: 'admin',
