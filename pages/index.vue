@@ -43,7 +43,7 @@
     <div class="p-6 py-8 md:px-0 container mx-auto">
       <div class="flex justify-between items-end">
         <h2 class="text-2xl font-semibold">Events Terdekat</h2>
-        <NuxtLink to="#" class="text-orange-500 font-semibold">Lihat semua</NuxtLink>
+        <NuxtLink to="/events" class="text-orange-500 font-semibold">Lihat semua</NuxtLink>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 py-4 gap-6">
         <div v-if="loading" v-for="i in [1,2,3,4]" :key="i"
