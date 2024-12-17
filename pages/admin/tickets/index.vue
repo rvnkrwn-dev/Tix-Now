@@ -134,7 +134,6 @@ const handleSearchData = async (query: string) => {
 const handleDeleteData = async (id: number) => {
   if (!confirm('Are you sure?')) return
   try {
-    isLoading.value = true
     await useFetchApi(`/api/auth/tickets/${id}`, {
       method: 'DELETE',
     });
@@ -142,9 +141,6 @@ const handleDeleteData = async (id: number) => {
     $toast('Berhasil menghapus data pengguna.', 'success');
   } catch (e) {
     $toast('Gagal menghapus data pengguna.', 'error');
-    handleError(e)
-  } finally {
-    isLoading.value = false
   }
 }
 
