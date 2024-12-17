@@ -1,8 +1,8 @@
 <template>
   <section class="h-[40dvh] md:h-[50dvh] py-8 container mx-auto">
-    <div v-if="loading" class="w-full h-[20rem] md:h-[35rem] bg-gray-200 animate-pulse rounded-xl">
+    <div v-if="loading" class="w-full h-[40dvh] py-8 md:h-[50dvh] animate-pulse rounded-xl">
       <div class="w-full h-full flex items-center justify-center">
-        <div class="bg-gray-300 w-[80%] h-[80%] rounded-lg"></div>
+        <div class="bg-gray-300 w-full h-full rounded-lg"></div>
       </div>
     </div>
     <swiper
@@ -46,6 +46,12 @@
         <NuxtLink to="#" class="text-orange-500 font-semibold">Lihat semua</NuxtLink>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 py-4 gap-6">
+        <div v-if="loading" v-for="i in [1,2,3,4]" :key="i"
+             class="w-full h-[40dvh] py-8 md:h-[50dvh] animate-pulse rounded-xl">
+          <div class="w-full h-full flex items-center justify-center">
+            <div class="bg-gray-300 w-full h-full rounded-lg"></div>
+          </div>
+        </div>
         <div v-for="item in eventsAndTickets" class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl">
           <img class="w-full h-auto rounded-t-xl"
                :src="addCloudinaryTransformations(item?.secureUrl)"
@@ -67,7 +73,7 @@
   </section>
   <section>
     <!-- Subscribe -->
-    <div class="bg-orange-900 mt-10 px-4 py-20 sm:px-6 lg:px-8 lg:py-32 mx-auto">
+    <div class="bg-gray-700 mt-10 px-4 py-20 sm:px-6 lg:px-8 lg:py-32 mx-auto">
       <div class="grid md:grid-cols-2 gap-8">
         <div class="max-w-md">
           <h2 class="text-2xl text-white font-bold md:text-3xl md:leading-tight">Subscribe</h2>
@@ -101,16 +107,16 @@
   </section>
   <section>
     <!-- Card Section -->
-    <div class="max-w-5xl px-4 py-10 sm:px-6 lg:px-8 lg:py-24 mx-auto">
+    <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-24 mx-auto container">
       <div class="text-center">
         <h2 class="text-2xl font-semibold">Cara Beli Tiket</h2>
         <p class="text-gray-500">Sekarang beli tiket online gak perlu ribet</p>
       </div>
       <!-- Grid -->
-      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-        <!-- Card -->
-        <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition"
-           href="#">
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <!-- Card 1: Register -->
+        <div
+            class="group cursor-pointer flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition">
           <div class="p-4 md:p-5">
             <div class="flex gap-x-5">
               <svg class="mt-1 shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -123,21 +129,21 @@
               </svg>
 
               <div class="grow">
-                <h3 class="group-hover:text-orange-600 font-semibold text-gray-800">
-                  Ask our community
+                <h3 class="group cursor-pointer-hover:text-orange-600 font-semibold text-gray-800">
+                  Daftar Akun
                 </h3>
                 <p class="text-sm text-gray-500">
-                  Get help from 40k+ Preline users
+                  Mulai dengan membuat akun untuk mempermudah proses pembelian.
                 </p>
               </div>
             </div>
           </div>
-        </a>
+        </div>
         <!-- End Card -->
 
-        <!-- Card -->
-        <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition"
-           href="#">
+        <!-- Card 2: Login -->
+        <div
+            class="group cursor-pointer flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition">
           <div class="p-4 md:p-5">
             <div class="flex gap-x-5">
               <svg class="mt-1 shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -149,21 +155,21 @@
               </svg>
 
               <div class="grow">
-                <h3 class="group-hover:text-orange-600 font-semibold text-gray-800">
-                  Get help in the app
+                <h3 class="group cursor-pointer-hover:text-orange-600 font-semibold text-gray-800">
+                  Login ke Akun
                 </h3>
                 <p class="text-sm text-gray-500">
-                  Just head to «Help» in the app
+                  Masuk ke akun Anda untuk memulai proses pemilihan tiket.
                 </p>
               </div>
             </div>
           </div>
-        </a>
+        </div>
         <!-- End Card -->
 
-        <!-- Card -->
-        <a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition"
-           href="#">
+        <!-- Card 3: Pilih Tiket atau Acara -->
+        <div
+            class="group cursor-pointer flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition">
           <div class="p-4 md:p-5">
             <div class="flex gap-x-5">
               <svg class="mt-1 shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -175,23 +181,50 @@
               </svg>
 
               <div class="grow">
-                <h3 class="group-hover:text-orange-600 font-semibold text-gray-800">
-                  Email us
+                <h3 class="group cursor-pointer-hover:text-orange-600 font-semibold text-gray-800">
+                  Pilih Tiket atau Acara
                 </h3>
                 <p class="text-sm text-gray-500">
-                  Reach us at <span
-                    class="text-orange-600 decoration-2 group-hover:underline font-medium">info@site.com</span>
+                  Temukan acara atau tiket yang ingin Anda beli.
                 </p>
               </div>
             </div>
           </div>
-        </a>
+        </div>
+        <!-- End Card -->
+
+        <!-- Card 4: Checkout -->
+        <div
+            class="group cursor-pointer flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition">
+          <div class="p-4 md:p-5">
+            <div class="flex gap-x-5">
+              <svg class="mt-1 shrink-0 size-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+
+              <div class="grow">
+                <h3 class="group cursor-pointer-hover:text-orange-600 font-semibold text-gray-800">
+                  Checkout dan Bayar
+                </h3>
+                <p class="text-sm text-gray-500">
+                  Lanjutkan untuk melakukan pembayaran dan dapatkan tiket Anda.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- End Card -->
       </div>
       <!-- End Grid -->
     </div>
     <!-- End Card Section -->
   </section>
+
 </template>
 
 <script setup lang="ts">
@@ -218,7 +251,7 @@ const onAutoplayTimeLeft = (s: any, time: number, progress: number) => {
 };
 
 const eventsAndTicketsData = ref()
-const loading = ref<boolean>(false)
+const loading = ref<boolean>(true)
 
 const eventsAndTickets: any = computed(() => eventsAndTicketsData.value)
 

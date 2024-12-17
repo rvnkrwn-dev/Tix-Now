@@ -57,7 +57,7 @@
                 <template v-if="isLoading">
                   <tr>
                     <td
-                        :colspan="fields.length"
+                        :colspan="deleteAction ? fields.length +1 : fields.length"
                         class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-center"
                     >
                       Memuat data...

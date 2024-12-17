@@ -1,9 +1,7 @@
 <template>
   <!-- Breadcrumb -->
-  <div
-      class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8 lg:hidden">
+  <div class="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8 lg:hidden">
     <div class="flex items-center py-2">
-      <!-- Navigation Toggle -->
       <button type="button"
               class="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none"
               aria-haspopup="dialog" aria-expanded="false" aria-controls="hs-application-sidebar"
@@ -16,9 +14,6 @@
           <path d="m8 9 3 3-3 3"/>
         </svg>
       </button>
-      <!-- End Navigation Toggle -->
-
-      <!-- Breadcrumb -->
       <ol class="ms-3 flex items-center whitespace-nowrap">
         <li class="flex items-center text-sm text-gray-800">
           Aplikasi
@@ -32,16 +27,13 @@
           Tiket dan Acara
         </li>
       </ol>
-      <!-- End Breadcrumb -->
     </div>
   </div>
-  <!-- End Breadcrumb -->
 
   <div class="w-full min-h-screen lg:ps-64">
     <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
       <client-only>
         <div class="p-4 md:p-5 h-fit max-h-full flex flex-col bg-white border shadow-sm rounded-xl space-y-4">
-          <!-- Header -->
           <div>
             <h2 class="text-xl font-medium text-gray-800 w-full">Ubah Tiket dan Acara</h2>
           </div>
@@ -49,52 +41,84 @@
 
           <div class="h-full w-full mt-2">
             <!-- Form untuk mengubah Tiket dan Acara -->
-            <form v-if="selectedUser" @submit.prevent="handleSubmit">
+            <form v-if="selectedTicket" @submit.prevent="handleSubmit">
               <div class="space-y-4 flex flex-col">
-                <!-- Nama Lengkap -->
+                <!-- Nama Tiket -->
                 <div class="grid sm:grid-cols-3">
-                  <label for="name" class="block text-sm font-medium mb-2 w-full">Nama Lengkap</label>
+                  <label for="name" class="block text-sm font-medium mb-2 w-full">Nama Tiket</label>
                   <input
                       type="text"
                       id="name"
-                      v-model="selectedUser.full_name"
+                      v-model="selectedTicket.title"
                       class="col-span-2 py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                      placeholder="Masukan nama"
+                      placeholder="Masukan nama tiket"
                       required
                   />
                 </div>
-                <!-- Email -->
+                <!-- Deskripsi -->
                 <div class="grid sm:grid-cols-3">
-                  <label for="email" class="block text-sm font-medium mb-2 w-full">Email</label>
+                  <label for="description" class="block text-sm font-medium mb-2 w-full">Deskripsi</label>
+                  <textarea
+                      id="description"
+                      v-model="selectedTicket.description"
+                      class="col-span-2 py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                      placeholder="Masukan deskripsi tiket"
+                      required
+                  ></textarea>
+                </div>
+                <!-- Lokasi -->
+                <div class="grid sm:grid-cols-3">
+                  <label for="location" class="block text-sm font-medium mb-2 w-full">Lokasi</label>
                   <input
-                      type="email"
-                      id="email"
-                      v-model="selectedUser.email"
+                      type="text"
+                      id="location"
+                      v-model="selectedTicket.location"
                       class="col-span-2 py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
-                      placeholder="Masukan email"
+                      placeholder="Masukan lokasi tiket"
                       required
                   />
                 </div>
-                <!-- Role -->
+                <!-- Tanggal dan Waktu -->
                 <div class="grid sm:grid-cols-3">
-                  <label for="role" class="block text-sm font-medium mb-2 w-full">Role</label>
-                  <select
-                      id="role"
-                      v-model="selectedUser.role"
-                      class="py-3 px-4 pe-9 block col-span-2 w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                  <label for="dateTime" class="block text-sm font-medium mb-2 w-full">Tanggal dan Waktu</label>
+                  <input
+                      type="datetime-local"
+                      id="dateTime"
+                      v-model="selectedTicket.dateTime"
+                      class="col-span-2 py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                       required
-                  >
-                    <option value="null" selected>-Pilih-</option>
-                    <option value="ADMIN">Admin</option>
-                    <option value="USER">User</option>
-                  </select>
+                  />
+                </div>
+                <!-- Stok -->
+                <div class="grid sm:grid-cols-3">
+                  <label for="stock" class="block text-sm font-medium mb-2 w-full">Stok</label>
+                  <input
+                      type="number"
+                      id="stock"
+                      v-model="selectedTicket.stock"
+                      class="col-span-2 py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                      placeholder="Masukan stok tiket"
+                      required
+                  />
+                </div>
+                <!-- Harga -->
+                <div class="grid sm:grid-cols-3">
+                  <label for="price" class="block text-sm font-medium mb-2 w-full">Harga</label>
+                  <input
+                      type="number"
+                      id="price"
+                      v-model="selectedTicket.price"
+                      class="col-span-2 py-3 px-4 block w-full border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                      placeholder="Masukan harga tiket"
+                      required
+                  />
                 </div>
 
                 <!-- Button Actions -->
                 <div class="space-x-3 self-end">
                   <button
                       type="button"
-                      @click="selectedUser = null"
+                      @click="selectedTicket = null"
                       class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-red-600 bg-transparent text-red-600 hover:bg-red-200 focus:outline-none focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none"
                   >
                     Batal
@@ -109,10 +133,10 @@
               </div>
             </form>
 
-            <!-- Jika tidak ada Tiket dan Acara yang dipilih, tampilkan combobox pencarian -->
+            <!-- Jika tidak ada Tiket yang dipilih, tampilkan combobox pencarian -->
             <div v-else>
               <label for="hs-combobox-basic-usage" class="block text-sm font-medium mb-2 w-full">Cari Tiket dan Acara</label>
-              <ComboBoxTicket @selectedTicket="handleSelectedUser"/>
+              <ComboBoxTicket @selectedTicket="handleSelectedTicket"/>
             </div>
           </div>
         </div>
@@ -122,7 +146,7 @@
 </template>
 
 <script setup lang="ts">
-import type {User} from "~/types/TypesModel";
+import type {TicketType} from "~/types/TypesModel";  // Sesuaikan dengan tipe data Tiket Anda
 
 definePageMeta({
   layout: 'admin',
@@ -130,29 +154,31 @@ definePageMeta({
 
 const {$toast} = useNuxtApp();
 
-const selectedUser = ref<any>(null)
+const selectedTicket = ref<any>(null)
 const isLoading = ref<boolean>(false)
 
-const handleSelectedUser = (user: User) => {
-  selectedUser.value = {
-    id: user.id,
-    full_name: user.full_name,
-    email: user.email,
-    role: user.role,
-    status: user.password,
+const handleSelectedTicket = (ticket: TicketType) => {
+  selectedTicket.value = {
+    id: ticket.id,
+    title: ticket.title,
+    description: ticket.description,
+    location: ticket.location,
+    dateTime: ticket.dateTime,
+    stock: ticket.stock,
+    price: ticket.price,
   }
 }
 
 const handleSubmit = async () => {
   try {
     isLoading.value = true;
-    await useFetchApi(`/api/auth/users/${selectedUser.value?.id}`, {
+    await useFetchApi(`/api/auth/tickets/${selectedTicket.value?.id}`, {
       method: 'PUT',
-      body: selectedUser.value
+      body: selectedTicket.value
     })
 
     $toast('Berhasil mengubah data Tiket dan Acara.', 'success');
-    selectedUser.value = null
+    selectedTicket.value = null
   } catch (error) {
     $toast('Gagal mengubah data Tiket dan Acara.', 'error');
   } finally {
