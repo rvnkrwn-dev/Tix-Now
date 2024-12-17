@@ -4,12 +4,7 @@ import {RegisterRequest, UpdateUserRequest} from "~/types/AuthType";
 export class User {
     static createUser = (data: RegisterRequest ) => {
         return prisma.user.create({
-            data: {
-                full_name: data.full_name,
-                username: data.username,
-                email: data.email,
-                password: data.password,
-            },
+            data: data
         });
     };
 
@@ -34,6 +29,7 @@ export class User {
                     username: data.username,
                     email: data.email,
                     password: data.password,
+                    role: data?.role
                 },
             select: {
                 id: true,

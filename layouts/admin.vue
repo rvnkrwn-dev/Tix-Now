@@ -202,25 +202,12 @@
                 </NuxtLink>
               </li>
 
-              <li class="hs-accordion" id="puskesmas-accordion">
+              <li class="hs-accordion" id="categories-accordion">
                 <button type="button"
                         class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                        aria-expanded="true" aria-controls="puskesmas-accordion-child">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                       class="lucide lucide-hotel">
-                    <path d="M10 22v-6.57"/>
-                    <path d="M12 11h.01"/>
-                    <path d="M12 7h.01"/>
-                    <path d="M14 15.43V22"/>
-                    <path d="M15 16a5 5 0 0 0-6 0"/>
-                    <path d="M16 11h.01"/>
-                    <path d="M16 7h.01"/>
-                    <path d="M8 11h.01"/>
-                    <path d="M8 7h.01"/>
-                    <rect x="4" y="2" width="16" height="20" rx="2"/>
-                  </svg>
-                  Puskesmas
+                        aria-expanded="true" aria-controls="categories-accordion-child">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
+                  Kategori
 
                   <svg class="hs-accordion-active:block ms-auto hidden size-4" xmlns="http://www.w3.org/2000/svg"
                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -235,9 +222,9 @@
                   </svg>
                 </button>
 
-                <div id="puskesmas-accordion-child"
+                <div id="categories-accordion-child"
                      class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
-                     role="region" aria-labelledby="puskesmas-accordion">
+                     role="region" aria-labelledby="categories-accordion">
                   <ul class="ps-4 pt-1 mt-2 space-y-1 border-l-2 ml-4">
                     <li>
                       <NuxtLink
@@ -288,6 +275,79 @@
                 </div>
               </li>
 
+              <li class="hs-accordion" id="tickets-accordion">
+                <button type="button"
+                        class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                        aria-expanded="true" aria-controls="tickets-accordion-child">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ticket"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+                  Tiket dan Acara
+
+                  <svg class="hs-accordion-active:block ms-auto hidden size-4" xmlns="http://www.w3.org/2000/svg"
+                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m18 15-6-6-6 6"/>
+                  </svg>
+
+                  <svg class="hs-accordion-active:hidden ms-auto block size-4" xmlns="http://www.w3.org/2000/svg"
+                       width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </button>
+
+                <div id="tickets-accordion-child"
+                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden"
+                     role="region" aria-labelledby="tickets-accordion">
+                  <ul class="ps-4 pt-1 mt-2 space-y-1 border-l-2 ml-4">
+                    <li>
+                      <NuxtLink
+                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                          to="/admin/tickets" active-class="bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-list">
+                          <path d="M3 12h.01"/>
+                          <path d="M3 18h.01"/>
+                          <path d="M3 6h.01"/>
+                          <path d="M8 12h13"/>
+                          <path d="M8 18h13"/>
+                          <path d="M8 6h13"/>
+                        </svg>
+                        Daftar
+                      </NuxtLink>
+                    </li>
+                    <li>
+                      <NuxtLink
+                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                          to="/admin/tickets/add" active-class="bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-circle-plus">
+                          <circle cx="12" cy="12" r="10"/>
+                          <path d="M8 12h8"/>
+                          <path d="M12 8v8"/>
+                        </svg>
+                        Tambah
+                      </NuxtLink>
+                    </li>
+                    <li>
+                      <NuxtLink
+                          class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                          to="/admin/tickets/edit" active-class="bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                             stroke-linejoin="round" class="lucide lucide-pencil">
+                          <path
+                              d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                          <path d="m15 5 4 4"/>
+                        </svg>
+                        Ubah
+                      </NuxtLink>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
               <li class="hs-accordion" id="pengguna-accordion">
                 <button type="button"
                         class="hs-accordion-toggle w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
@@ -322,7 +382,7 @@
                     <li>
                       <NuxtLink
                           class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                          to="/users" active-class="bg-gray-100">
+                          to="/admin/users" active-class="bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                              stroke-linejoin="round" class="lucide lucide-list">
@@ -339,7 +399,7 @@
                     <li>
                       <NuxtLink
                           class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                          to="/users/add" active-class="bg-gray-100">
+                          to="/admin/users/add" active-class="bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                              stroke-linejoin="round" class="lucide lucide-circle-plus">
@@ -353,7 +413,7 @@
                     <li>
                       <NuxtLink
                           class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
-                          to="/users/edit" active-class="bg-gray-100">
+                          to="/admin/users/edit" active-class="bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"
                              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                              stroke-linejoin="round" class="lucide lucide-pencil">

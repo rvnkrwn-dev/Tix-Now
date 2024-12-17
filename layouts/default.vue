@@ -28,7 +28,7 @@
               </text>
             </svg>
           </NuxtLink>
-          <div class="relative flex-1">
+          <div class="relative flex-1 hidden md:block">
             <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
               <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -38,7 +38,7 @@
               </svg>
             </div>
             <input type="text"
-                   class="py-2 ps-10 pe-16 block w-full bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                   class="py-2 ps-10 pe-16 block w-full bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 focus:ring-orange-500 disabled:opacity-50 disabled:pointer-events-none"
                    placeholder="Search">
             <div class="absolute inset-y-0 end-0 flex items-center pointer-events-none z-20 pe-3 text-gray-400">
               <svg class="shrink-0 size-3 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -91,7 +91,7 @@
           <div
               class="overflow-hidden overflow-y-auto max-h-[75vh] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300">
             <div class="py-2 md:py-0 flex flex-col md:flex-row md:items-center md:justify-end gap-0.5 md:gap-1">
-              <NuxtLink class="p-2 flex items-center text-sm text-blue-600 focus:outline-none focus:text-blue-600"
+              <NuxtLink class="p-2 flex items-center text-sm text-orange-600 focus:outline-none focus:text-orange-600"
                         to="#" aria-current="page">
                 <svg class="shrink-0 size-4 me-3 md:me-2 block md:hidden" xmlns="http://www.w3.org/2000/svg" width="24"
                      height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -142,7 +142,7 @@
       <slot/>
     </main>
     <!-- ========== FOOTER ========== -->
-    <footer class="mt-auto bg-blue-950 w-full">
+    <footer class="mt-auto bg-orange-950 w-full">
       <div class="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
         <!-- Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -176,7 +176,7 @@
                     href="#">Blog</a></p>
               <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200"
                     href="#">Careers</a> <span
-                  class="inline-block ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
+                  class="inline-block ms-1 text-xs bg-orange-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
               <p><a class="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200"
                     href="#">Customers</a></p>
             </div>
@@ -191,10 +191,10 @@
                 <div class="w-full">
                   <label for="hero-input" class="sr-only">Subscribe</label>
                   <input type="text" id="hero-input" name="hero-input"
-                         class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                         class="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-orange-500 focus:ring-orange-500 disabled:opacity-50 disabled:pointer-events-none"
                          placeholder="Enter your email">
                 </div>
-                <a class="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                <a class="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-600 text-white hover:bg-orange-700 focus:outline-none focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none"
                    href="#">
                   Subscribe
                 </a>

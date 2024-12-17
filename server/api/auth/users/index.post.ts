@@ -18,9 +18,7 @@ export default defineEventHandler(async (event) => {
 
         const data = await readBody(event);
 
-        const { full_name, username, email } = data;
-
-        if (!full_name || !email) {
+        if (!data.full_name || !data.email || !data.username) {
             setResponseStatus(event, 400);
             return { code: 400, message: 'Harap berikan semua kolom yang diperlukan (nama lengkap, email).' };
         }
@@ -31,21 +29,19 @@ export default defineEventHandler(async (event) => {
         const hashedPassword = bcrypt.hashSync(password, 10);
 
         const create_user = await User.createUser({
-            full_name,
-            username,
-            email,
+            ...data,
             password: hashedPassword,
         });
 
         const payload : LogRequest = {
             user_id : user.id,
             action : ActionLog.CREATE,
-            description : `Akun pengguna dengan email: ${email}, berhasil ditambahkan`,
+            description : `Akun pengguna dengan email: ${data.email}, berhasil ditambahkan`,
         }
 
         await createLog(payload)
 
-        await SendEmailCreateAccount(email, full_name, password);
+        await SendEmailCreateAccount(data.email, data.full_name, password);
 
         const { password: _, ...userData } = create_user;
 

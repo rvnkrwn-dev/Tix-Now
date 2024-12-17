@@ -47,7 +47,10 @@
   </section>
   <section>
     <div class="p-6 py-8 md:px-0 container mx-auto">
-      <h2 class="text-2xl font-semibold">Events Terdekat</h2>
+      <div class="flex justify-between items-end">
+        <h2 class="text-2xl font-semibold">Events Terdekat</h2>
+        <NuxtLink to="#" class="text-orange-500 font-semibold">Lihat semua</NuxtLink>
+      </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 py-4 gap-6">
         <div v-for="i in [1,2,3,4,5,6,7,8]" class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl">
           <img class="w-full h-auto rounded-t-xl"
@@ -70,7 +73,7 @@
   </section>
   <section>
     <!-- Subscribe -->
-    <div class="bg-blue-900 mt-10 px-4 py-20 sm:px-6 lg:px-8 lg:py-32 mx-auto">
+    <div class="bg-orange-900 mt-10 px-4 py-20 sm:px-6 lg:px-8 lg:py-32 mx-auto">
       <div class="grid md:grid-cols-2 gap-8">
         <div class="max-w-md">
           <h2 class="text-2xl text-white font-bold md:text-3xl md:leading-tight">Subscribe</h2>
@@ -85,10 +88,10 @@
               <div class="w-full">
                 <label for="hero-input" class="sr-only">Search</label>
                 <input type="text" id="hero-input" name="hero-input"
-                       class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                       class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-orange-500 focus:ring-orange-500 disabled:opacity-50 disabled:pointer-events-none"
                        placeholder="Enter your email">
               </div>
-              <a class="w-full sm:w-auto whitespace-nowrap py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+              <a class="w-full sm:w-auto whitespace-nowrap py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-orange-600 text-white hover:bg-orange-700 focus:outline-none focus:bg-orange-700 disabled:opacity-50 disabled:pointer-events-none"
                  href="#">
                 Subscribe
               </a>
@@ -126,7 +129,7 @@
               </svg>
 
               <div class="grow">
-                <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                <h3 class="group-hover:text-orange-600 font-semibold text-gray-800">
                   Ask our community
                 </h3>
                 <p class="text-sm text-gray-500">
@@ -152,7 +155,7 @@
               </svg>
 
               <div class="grow">
-                <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                <h3 class="group-hover:text-orange-600 font-semibold text-gray-800">
                   Get help in the app
                 </h3>
                 <p class="text-sm text-gray-500">
@@ -178,12 +181,12 @@
               </svg>
 
               <div class="grow">
-                <h3 class="group-hover:text-blue-600 font-semibold text-gray-800">
+                <h3 class="group-hover:text-orange-600 font-semibold text-gray-800">
                   Email us
                 </h3>
                 <p class="text-sm text-gray-500">
                   Reach us at <span
-                    class="text-blue-600 decoration-2 group-hover:underline font-medium">info@site.com</span>
+                    class="text-orange-600 decoration-2 group-hover:underline font-medium">info@site.com</span>
                 </p>
               </div>
             </div>

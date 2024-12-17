@@ -134,10 +134,6 @@ const handleSubmit = async () => {
     } else {
       localStorage.removeItem("email");
     }
-
-    // Setelah berhasil login, arahkan ke halaman utama
-    return navigateTo('/');
-
   } catch (error: any) {
     // Menangani error dan menampilkan pesan kesalahan
     console.error(error);
