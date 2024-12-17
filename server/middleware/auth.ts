@@ -7,12 +7,11 @@ export default defineEventHandler( async (event) => {
         const endpoints = [
             '/api/auth/user',
             '/api/auth/logout',
-            '/api/auth/verification',
+            '/api/auth/log',
             '/api/auth/users',
             '/api/auth/users/:id',
             '/api/auth/users/search?q=:q',
             '/api/auth/users?page=:page&pagesize=:pagesize',
-            '/api/auth/logs?page=:page&pagesize=:pagesize',
             '/api/auth/categories',
             '/api/auth/categories/:id',
             '/api/auth/categories?page=:page&pagesize=:pagesize',

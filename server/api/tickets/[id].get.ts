@@ -1,4 +1,5 @@
-import { Category } from '~/server/model/Categories';
+import { Ticket } from '~/server/model/Tickets';
+import {createLog} from "~/server/utils/atLog";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -9,12 +10,12 @@ export default defineEventHandler(async (event) => {
             return {code: 400, message: 'Id tidak valid'};
         }
 
-        const getCategory = await Category.getCategoryById(id);
+        const getCategory = await Ticket.getTicketById(id);
 
         setResponseStatus(event, 200);
         return {
             code: 200,
-            message: "Kategori berhasil dikembalikan",
+            message: "Tiket berhasil dikembalikan",
             data: getCategory,
         };
     } catch (error: any) {

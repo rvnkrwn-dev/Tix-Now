@@ -1,21 +1,24 @@
 import { Category } from '~/server/model/Categories';
+import { setResponseStatus, getQuery } from 'h3';
 
 export default defineEventHandler(async (event) => {
     try {
-        const id = parseInt(event.context.params?.id as string);
+        const { q } = getQuery(event);
 
-        if (!id || isNaN(id)) {
+        if (typeof q !== 'string' || !q) {
             setResponseStatus(event, 400);
-            return {code: 400, message: 'Id tidak valid'};
+            return { code: 400, message: 'Parameter pencarian diperlukan dan harus berupa string.' };
         }
 
-        const getCategory = await Category.getCategoryById(id);
+        const category = await Category.searchCategory(q);
 
         setResponseStatus(event, 200);
         return {
             code: 200,
-            message: "Kategori berhasil dikembalikan",
-            data: getCategory,
+            message: "Kategori berhasil dikembalikan.",
+            data: {
+                users: category
+            },
         };
     } catch (error: any) {
         return sendError(
