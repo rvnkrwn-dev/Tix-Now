@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="p-6 py-8 md:px-0 container mx-auto">
-      <div class="flex justify-between items-end">
+      <div class="flex justify-between gap-2 flex-col md:flex-row">
         <h2 class="text-2xl font-semibold">Semua Acara</h2>
         <div class="relative w-full max-w-xs">
           <label for="hs-table-search" class="sr-only">Search</label>

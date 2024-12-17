@@ -57,15 +57,13 @@
                :src="addCloudinaryTransformations(item?.secureUrl)"
                alt="Card Image">
           <div class="p-4 md:p-5 space-y-3">
-            <h3 class="text-gray-800 font-semibold">
-              HARSASORA 62
-            </h3>
+            <h3 class="text-gray-800 font-semibold">{{ item.title }}</h3>
             <ul class="font-normal text-gray-500">
-              <li><span>18 Des 2024</span></li>
-              <li><span>Surabaya</span></li>
+              <li><span>{{ formatDate(item.dateTime) }}</span></li>
+              <li><span>{{ item.location }}</span></li>
             </ul>
             <hr>
-            <p>Rp. 200.000</p>
+            <p>Rp. {{ item.price.toLocaleString() }}</p>
           </div>
         </div>
       </div>
