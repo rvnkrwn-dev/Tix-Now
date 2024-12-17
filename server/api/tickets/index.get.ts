@@ -1,5 +1,11 @@
 import { Ticket } from "~/server/model/Tickets";
 
+function convertUTCtoWIB(utcDate: Date): Date {
+    const date = new Date(utcDate);
+    const wibDate = new Date(date.getTime() + 7 * 60 * 60 * 1000);
+    return wibDate;
+}
+
 export default defineEventHandler(async (event) => {
     try {
         const query = getQuery(event);
@@ -53,6 +59,12 @@ export default defineEventHandler(async (event) => {
             } else {
                 return a[sortBy] < b[sortBy] ? 1 : -1;
             }
+        });
+
+        // Konversi waktu ke WIB
+        tickets = tickets.map(ticket => {
+            ticket.dateTime = convertUTCtoWIB(ticket.dateTime);
+            return ticket;
         });
 
         const totalPages = Math.ceil(totalTickets / pagesize);
