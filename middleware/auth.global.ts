@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const user: any = useAuth().useAuthUser().value;
 
     // Mengecek apakah pengguna memiliki peran sebagai Admin
-    const isAdmin = user?.role === 'ADMIN';
+    const isAdmin = user?.role !== 'USER';
 
     // Jika pengguna sudah login dan mencoba mengakses halaman login/registrasi, arahkan ke halaman admin
     if (isAuthenticated && isAuthPage) {

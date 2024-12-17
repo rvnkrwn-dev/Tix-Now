@@ -82,7 +82,7 @@ const emits = defineEmits(['selectedTicket']);
 const searchText = ref('');
 const dropdownVisible = ref(false);
 const tickets = ref<TicketType[]>([]);
-const selectedticket = ref<TicketType | null>(null);
+const selectedTicket = ref<TicketType | null>(null);
 const isLoading = ref(false);
 
 // Computed property for filtered tickets based on searchText
@@ -116,7 +116,7 @@ const onSearch = async () => {
 // Handle ticket selection from the dropdown
 const handleSelectTicket = (ticket: TicketType) => {
   searchText.value = ticket.title; // Set search text to selected ticket's name
-  selectedticket.value = ticket;
+  selectedTicket.value = ticket;
   dropdownVisible.value = false; // Hide dropdown after selection
   emits('selectedTicket', ticket); // Emit selected ticket
 };
