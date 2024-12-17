@@ -1,9 +1,9 @@
 <template>
   <section>
     <div class="p-6 py-8 md:px-0 container mx-auto">
-      <div class="flex justify-between items-end">
+      <div class="flex justify-between gap-2 flex-col md:flex-row">
         <h2 class="text-2xl font-semibold">Semua Acara</h2>
-        <div class="relative w-full max-w-xs">
+        <div class="relative w-full md:max-w-xs">
           <label for="hs-table-search" class="sr-only">Search</label>
           <input
               type="text"
@@ -34,7 +34,7 @@
             <div class="bg-gray-300 w-full h-full rounded-lg"></div>
           </div>
         </div>
-        <div v-else v-for="item in eventsAndTickets" :key="item.id"
+        <NuxtLink v-else v-for="item in eventsAndTickets" :key="item.id" :to="`/events/${item.slug}`"
              class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl">
           <img class="w-full h-auto rounded-t-xl"
                :src="addCloudinaryTransformations(item?.secureUrl)"
@@ -48,7 +48,7 @@
             <hr>
             <p>Rp. {{ item.price.toLocaleString() }}</p>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <!-- Pagination Controls -->
