@@ -2,7 +2,7 @@
   <section>
     <div class="p-6 py-8 md:px-0 container mx-auto">
       <!-- Features -->
-      <div v-if="ticket" class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+      <div v-if="ticket && ticket.title" class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <!-- Grid -->
         <div class="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
           <div>
@@ -98,9 +98,9 @@
                 </li>
 
                 <li class="flex gap-x-3">
-                  <button @click="purchaseTicket" :disabled="quantity > ticket.stock"
+                  <button @click="purchaseTicket" :disabled="quantity > ticket.stock || loading"
                           class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
-                    Beli Tiket - {{ ticket.price * quantity }}
+                    {{ loading ? "Loading" : `Beli Tiket - ${ ticket.price * quantity}` }}
                   </button>
                 </li>
               </ul>
@@ -114,12 +114,13 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+const {$toast} = useNuxtApp();
 
 const {slug} = useRoute().params;
 const ticketData = ref<any>({});
 const loading = ref<boolean>(true);
 const quantity = ref(1);
+
 
 const ticket = computed(() => ticketData.value);
 
@@ -147,6 +148,7 @@ function formatDate(dateTime: string) {
 
 async function purchaseTicket() {
   try {
+    loading.value = true;
     const payload = {
       detailRequests: [
         {
@@ -155,14 +157,16 @@ async function purchaseTicket() {
         },
       ],
     }
-    console.log(payload)
-    const response: any = await useFetchApi('/api/auth/transactions', {
+    await useFetchApi('/api/auth/transactions', {
       method: 'POST',
       body: payload
     });
+
+    $toast("Tiket berhasil di booking tunggu pesan email berikutnya", "success");
   } catch (e) {
-    console.error('Error processing purchase:', e);
-    alert('Terjadi kesalahan saat memproses transaksi.');
+    $toast("Terjadi kesalahan saat memproses transaksi.", "error");
+  } finally {
+    loading.value = false;
   }
 }
 
