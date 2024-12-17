@@ -1,5 +1,5 @@
-import { prisma } from '~/server/config/db';
-import { LogRequest } from '~/types/AuthType';
+import {prisma} from '~/server/config/db';
+import {LogRequest} from '~/types/AuthType';
 
 export class Log {
     static createLog = async (data: LogRequest) => {
@@ -15,27 +15,21 @@ export class Log {
     static getAllLogsByUserId = (user_id: number, page: number, pageSize: number) => {
         const skip = (page - 1) * pageSize;
         const take = pageSize;
-
-        return Promise.all([
-            prisma.log.count({
-                where: { user_id }
-            }), // Get total count of logs for the user
-            prisma.log.findMany({
-                where: { user_id },
-                skip: skip,
-                take: take,
-                include: {
-                    user: {
-                        select: {
-                            id: true,
-                            full_name: true,
-                            email: true,
-                            role: true,
-                        }
+        return prisma.log.findMany({
+            where: {user_id},
+            skip: skip,
+            take: take,
+            include: {
+                user: {
+                    select: {
+                        id: true,
+                        full_name: true,
+                        email: true,
+                        role: true,
                     }
                 }
-            })
-        ]);
+            }
+        })
     };
 
     static countAllLog = () => {

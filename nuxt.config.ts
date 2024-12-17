@@ -14,4 +14,7 @@ export default defineNuxtConfig({
     SMTP_PASSWORD: process.env.SMTP_PASSWORD ?? "",
     MAIL_FROM_EMAIL: process.env.MAIL_FROM_EMAIL ?? "",
   },
+  modules: [
+    '@nuxtjs/tailwindcss'
+  ],
 })

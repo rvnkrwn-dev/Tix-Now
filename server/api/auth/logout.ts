@@ -45,8 +45,6 @@ export default defineEventHandler(async (event) => {
 
         deleteRefreshToken(event);
 
-        appendHeader(event, 'Set-Cookie', 'refresh_token=; HttpOnly; Path=/; Max-Age=0');
-
         return { code: 200, message: 'Berhasil keluar!' };
     } catch (error: any) {
         console.error('Kesalahan ketika keluar:', error);
