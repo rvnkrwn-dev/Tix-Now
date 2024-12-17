@@ -1,5 +1,6 @@
 import { prisma } from '~/server/config/db';
 import { TicketRequest } from '~/types/AuthType';
+import {sortByKey} from "@vue/devtools-shared";
 
 export class Ticket {
     // Fungsi untuk membuat tiket baru
@@ -85,8 +86,8 @@ export class Ticket {
                 createdAt: true,
                 updatedAt: true,
             },
-            skip: skip, // Mulai dari data keberapa
-            take: take, // Ambil berapa data
+            skip: skip,
+            take: take,
         });
     };
 
@@ -121,4 +122,54 @@ export class Ticket {
             }
         });
     };
+
+    static async getUpcomingTickets(page: number, pagesize: number, now: string) {
+        const skip = (page - 1) * pagesize;
+        const take = pagesize;
+        const sevenDaysLater = new Date(new Date(now).getTime() + 7 * 24 * 60 * 60 * 1000); // Sekarang + 7 hari
+
+        return prisma.ticket.findMany({
+            where: {
+                dateTime: {
+                    gt: new Date(now),
+                    lt: sevenDaysLater,
+                },
+            },
+            orderBy: {
+                dateTime: 'asc',
+            },
+            skip,
+            take,
+            select: {
+                id: true,
+                slug: true,
+                title: true,
+                description: true,
+                location: true,
+                dateTime: true,
+                stock: true,
+                price: true,
+                categoryId: true,
+                imageUrl: true,
+                secureUrl: true,
+                publicId: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+        });
+    }
+
+    static async countUpcomingTickets(now: string) {
+        const sevenDaysLater = new Date(new Date(now).getTime() + 7 * 24 * 60 * 60 * 1000); // Sekarang + 7 hari
+
+        const count = await prisma.ticket.count({
+            where: {
+                dateTime: {
+                    gt: new Date(now),
+                    lt: sevenDaysLater,
+                },
+            },
+        });
+        return count;
+    }
 }
