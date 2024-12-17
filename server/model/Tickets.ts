@@ -79,12 +79,13 @@ export class Ticket {
                 dateTime: true,
                 stock: true,
                 price: true,
-                categoryId: true,
+                categoryId: false,
                 imageUrl: true,
                 secureUrl: true,
                 publicId: true,
                 createdAt: true,
                 updatedAt: true,
+                Category: true
             },
             skip: skip,
             take: take,
@@ -126,7 +127,7 @@ export class Ticket {
     static async getUpcomingTickets(page: number, pagesize: number, now: string) {
         const skip = (page - 1) * pagesize;
         const take = pagesize;
-        const sevenDaysLater = new Date(new Date(now).getTime() + 7 * 24 * 60 * 60 * 1000); // Sekarang + 7 hari
+        const sevenDaysLater = new Date(new Date(now).getTime() + 30 * 24 * 60 * 60 * 1000); // Sekarang + 30 hari
 
         return prisma.ticket.findMany({
             where: {

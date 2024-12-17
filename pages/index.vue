@@ -1,6 +1,12 @@
 <template>
   <section class="h-[40dvh] md:h-[50dvh] py-8 container mx-auto">
+    <div v-if="loading" class="w-full h-[20rem] md:h-[35rem] bg-gray-200 animate-pulse rounded-xl">
+      <div class="w-full h-full flex items-center justify-center">
+        <div class="bg-gray-300 w-[80%] h-[80%] rounded-lg"></div>
+      </div>
+    </div>
     <swiper
+        v-else
         :spaceBetween="30"
         :centeredSlides="true"
         :autoplay="{
@@ -15,25 +21,13 @@
         @autoplayTimeLeft="onAutoplayTimeLeft"
         class="sm:rounded-xl overflow-hidden"
     >
-      <swiper-slide>
-        <img
-            src="https://images.unsplash.com/photo-1731008948799-a23081ddf419?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-      </swiper-slide>
-      <swiper-slide>
-        <img
-            src="https://images.unsplash.com/photo-1731008948799-a23081ddf419?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-      </swiper-slide>
-      <swiper-slide>
-        <img
-            src="https://images.unsplash.com/photo-1731008948799-a23081ddf419?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-      </swiper-slide>
-      <swiper-slide>
-        <img
-            src="https://images.unsplash.com/photo-1731008948799-a23081ddf419?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-      </swiper-slide>
-      <swiper-slide>
-        <img
-            src="https://images.unsplash.com/photo-1731008948799-a23081ddf419?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+      <swiper-slide v-for="item in eventsAndTickets" :key="item.id">
+        <div class="swiper-item w-full h-full">
+          <img
+              loading="lazy"
+              class="min-h-full min-w-full object-fill"
+              :src="addCloudinaryTransformations(item?.secureUrl)" :alt="item.publicId"/>
+        </div>
       </swiper-slide>
       <template #container-end>
         <div class="autoplay-progress">
@@ -52,9 +46,9 @@
         <NuxtLink to="#" class="text-orange-500 font-semibold">Lihat semua</NuxtLink>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 py-4 gap-6">
-        <div v-for="i in [1,2,3,4,5,6,7,8]" class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl">
+        <div v-for="item in eventsAndTickets" class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl">
           <img class="w-full h-auto rounded-t-xl"
-               src="https://images.unsplash.com/photo-1680868543815-b8666dba60f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&q=80"
+               :src="addCloudinaryTransformations(item?.secureUrl)"
                alt="Card Image">
           <div class="p-4 md:p-5 space-y-3">
             <h3 class="text-gray-800 font-semibold">
@@ -222,6 +216,42 @@ const onAutoplayTimeLeft = (s: any, time: number, progress: number) => {
     progressContent.value.textContent = `${Math.ceil(time / 1000)}s`;
   }
 };
+
+const eventsAndTicketsData = ref()
+const loading = ref<boolean>(false)
+
+const eventsAndTickets: any = computed(() => eventsAndTicketsData.value)
+
+const fetchUpComingEvent = async () => {
+  try {
+    loading.value = true;
+    const response: any = await useFetchApi('/api/tickets?page=1&pagesize=4&type=upcoming')
+    eventsAndTicketsData.value = response.data.tickets
+  } catch (e) {
+
+  } finally {
+    loading.value = false
+  }
+}
+
+function addCloudinaryTransformations(url: string, transformations: string = "ar_16:9,c_crop,g_auto,w_1280") {
+  // Pisahkan URL menjadi bagian sebelum dan sesudah "/image/upload/"
+  const uploadIndex = url.indexOf("/image/upload/");
+  if (uploadIndex === -1) {
+    throw new Error("URL Cloudinary tidak valid");
+  }
+
+  // Sisipkan transformasi di antara bagian sebelum dan sesudah "/image/upload/"
+  const beforeUpload = url.substring(0, uploadIndex + 14); // "/image/upload/" memiliki panjang 14 karakter
+  const afterUpload = url.substring(uploadIndex + 14);
+
+  // Gabungkan transformasi
+  return `${beforeUpload}${transformations}/${afterUpload}`;
+}
+
+onMounted(() => {
+  fetchUpComingEvent()
+})
 </script>
 
 <style lang="css" scoped>
