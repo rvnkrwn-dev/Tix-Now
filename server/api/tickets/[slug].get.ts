@@ -3,14 +3,14 @@ import {createLog} from "~/server/utils/atLog";
 
 export default defineEventHandler(async (event) => {
     try {
-        const id = parseInt(event.context.params?.id as string);
+        const slug = event.context.params?.slug as string
 
-        if (!id || isNaN(id)) {
+        if (!slug) {
             setResponseStatus(event, 400);
-            return {code: 400, message: 'Id tidak valid'};
+            return {code: 400, message: 'slug tidak valid'};
         }
 
-        const getCategory = await Ticket.getTicketById(id);
+        const getCategory = await Ticket.getTicketBySlug(slug);
 
         setResponseStatus(event, 200);
         return {

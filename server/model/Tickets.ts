@@ -64,6 +64,28 @@ export class Ticket {
         });
     };
 
+    static getTicketBySlug = (slug: string) => {
+        return prisma.ticket.findUnique({
+            where: { slug: slug },
+            select: {
+                id: true,
+                slug: true,
+                title: true,
+                description: true,
+                location: true,
+                dateTime: true,
+                stock: true,
+                price: true,
+                categoryId: true,
+                imageUrl: true,
+                secureUrl: true,
+                publicId: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+        });
+    };
+
     // Fungsi untuk mengambil semua tiket
     static getAllTickets = async (page: number, pagesize: number) => {
         const skip = (page - 1) * pagesize; // Hitung data yang dilewatkan

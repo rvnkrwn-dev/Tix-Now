@@ -52,7 +52,7 @@
             <div class="bg-gray-300 w-full h-full rounded-lg"></div>
           </div>
         </div>
-        <div v-for="item in eventsAndTickets" class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl">
+        <NuxtLink v-for="item in eventsAndTickets" class="flex flex-col bg-white shadow-md shadow-black/10 rounded-xl" :to="`/events/${item.slug}`">
           <img class="w-full h-auto rounded-t-xl"
                :src="addCloudinaryTransformations(item?.secureUrl)"
                alt="Card Image">
@@ -65,7 +65,7 @@
             <hr>
             <p>Rp. {{ item.price.toLocaleString() }}</p>
           </div>
-        </div>
+        </NuxtLink>
       </div>
     </div>
   </section>
@@ -234,6 +234,7 @@ import 'swiper/css';
 
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import {formatDate} from "compatx";
 
 const progressCircle = ref<HTMLElement | null>(null);
 const progressContent = ref<HTMLElement | null>(null);
@@ -252,6 +253,16 @@ const eventsAndTicketsData = ref()
 const loading = ref<boolean>(true)
 
 const eventsAndTickets: any = computed(() => eventsAndTicketsData.value)
+
+function formatDate(dateTime: string) {
+  const date = new Date(dateTime);
+  return date.toLocaleDateString('id-ID', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
 
 const fetchUpComingEvent = async () => {
   try {
