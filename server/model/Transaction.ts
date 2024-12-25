@@ -3,6 +3,7 @@
 import {prisma} from '~/server/config/db';
 import {TransactionRequest, DetailTransactionRequest} from '~/types/AuthType';
 import {TransactionStatus} from "@prisma/client";
+import {SendEmailTransaction} from "~/server/utils/SendEmailTransaction";
 
 export class Transaction {
     // Fungsi untuk membuat transaksi baru beserta detail transaksi

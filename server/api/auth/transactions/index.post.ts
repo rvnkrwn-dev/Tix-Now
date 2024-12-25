@@ -1,8 +1,7 @@
-// transactions/index.post.ts
-
 import {DetailTransactionRequest, LogRequest, TransactionRequest} from '~/types/AuthType';
 import {ActionLog, TransactionStatus} from '~/types/TypesModel';
 import {Transaction} from '~/server/model/Transaction';
+import { SendEmailTransaction } from '~/server/utils/SendEmailTransaction';
 
 export default defineEventHandler(async (event) => {
     try {
@@ -37,9 +36,14 @@ export default defineEventHandler(async (event) => {
 
         await createLog(payload);
 
+        const user_email = user.email;
+        const email_subject = 'Konfirmasi Transaksi Anda';
+
+        await SendEmailTransaction(transaction.id, user_email, email_subject);
+
         return {
             code: 201,
-            message: 'Transaksi berhasil dibuat!',
+            message: 'Transaksi berhasil dibuat, Silahkan cek email untuk Detail Transaksinya!',
             data: transaction,
         };
     } catch (error: any) {

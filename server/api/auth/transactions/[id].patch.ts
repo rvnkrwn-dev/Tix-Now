@@ -1,6 +1,8 @@
 import {Transaction} from "~/server/model/Transaction";
 import {ActionLog} from "~/types/TypesModel";
 import {LogRequest} from "~/types/AuthType";
+import {SendEmailTransaction} from "~/server/utils/SendEmailTransaction";
+import {SendEmailUpdateStatus} from "~/server/utils/SendEmailUpdateStatus";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -29,6 +31,12 @@ export default defineEventHandler(async (event) => {
         await createLog(payload)
 
         const updatedstatus = await Transaction.updateTransactionStatus(id, status);
+
+        const user_email = user.email;
+        const email_subject = 'Status Transaksi Telah Selesai';
+
+        await SendEmailUpdateStatus(id, user_email, email_subject);
+
 
         setResponseStatus(event, 200);
         return {
