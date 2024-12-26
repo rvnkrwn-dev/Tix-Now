@@ -79,9 +79,6 @@ export class Transaction {
                 userId: data.user_id,
                 totalTicket: data.total_ticket,
                 total: data.total,
-                imageUrl: data.imageUrl,
-                secureUrl: data.secureUrl,
-                publicId: data.publicId
             },
         });
     };

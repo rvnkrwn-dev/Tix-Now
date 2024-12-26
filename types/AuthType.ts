@@ -74,9 +74,6 @@ export interface TransactionRequest {
     user_id: number;
     total_ticket: number;
     total: number;
-    imageUrl?: string
-    secureUrl?: string;
-    publicId?: string;
 }
 
 // Detail Transaction Request Interface

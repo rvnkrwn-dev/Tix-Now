@@ -33,8 +33,6 @@ export default defineEventHandler(async (event) => {
 
         await RefreshToken.deleteToken(refreshToken);
 
-        const data = await readBody(event)
-
         const payload : LogRequest = {
             user_id : user.id,
             action : ActionLog.LOGOUT,
