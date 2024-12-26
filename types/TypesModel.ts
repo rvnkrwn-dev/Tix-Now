@@ -59,6 +59,9 @@ export interface TransactionType {
     updatedAt: Date;
     user: User;
     details: DetailTransaction;
+    imageUrl?: string;
+    secureUrl?: string;
+    publicId?: string;
 }
 
 export enum TransactionStatus {
