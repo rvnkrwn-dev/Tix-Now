@@ -122,6 +122,8 @@ export default () => {
                 isLoggedIn().value = String(false)
                 resolve(true)
             } catch (error) {
+                setToken(null)
+                setUser(null)
                 isLoggedIn().value = String(false)
                 reject(error)
             }
