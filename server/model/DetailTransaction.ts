@@ -65,4 +65,21 @@ export class DetailTransaction {
             return total + (detail.ticket.price * detail.quantity);
         }, 0);
     };
+
+    static getDetailTransactionByTransactionId = async (transactionId: number) => {
+        return prisma.detailTransaction.findMany({
+            where: { transactionId: transactionId },
+            select: {
+                id: true,
+                transactionId: true,
+                ticketId: true,
+                quantity: true,
+                createdAt: true,
+                updatedAt: true,
+                ticket: { select: { title: true } } // Mengambil nama tiket
+            },
+        });
+    };
+
+
 }
