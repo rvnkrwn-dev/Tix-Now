@@ -7,7 +7,11 @@ import {SendEmailTransaction} from "~/server/utils/SendEmailTransaction";
 
 export class Transaction {
 // Fungsi untuk membuat transaksi baru beserta detail transaksi
-    static createTransactionWithDetails = async (transactionData: TransactionRequest, detailRequests: DetailTransactionRequest[]) => {
+    static createTransactionWithDetails = async (transactionData: {
+        total_ticket: number;
+        total: number;
+        user_id: any
+    }, detailRequests: DetailTransactionRequest[]) => {
         return prisma.$transaction(async (prisma) => {
             // Memulai transaksi
             const transaction = await prisma.transaction.create({
