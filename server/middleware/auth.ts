@@ -21,6 +21,7 @@ export default defineEventHandler( async (event) => {
             '/api/auth/tickets?page=:page&pagesize=:pagesize',
             '/api/auth/tickets/search?q=:q',
             '/api/auth/transactions',
+            '/api/auth/transactions/history?page=:page&pagesize=:pagesize',
             '/api/auth/transactions/:id',
             '/api/auth/transactions?page=:page&pagesize=:pagesize',
         ]
