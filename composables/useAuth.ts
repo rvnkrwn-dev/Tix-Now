@@ -32,10 +32,15 @@ export default () => {
                     }
                 })
 
+                const user = response?.data?.user
                 setToken(response?.access_token)
-                setUser(response?.data?.user)
+                setUser(user)
                 isLoggedIn().value = String(true)
-                resolve(true)
+                if(String(user.role).toLowerCase() === 'admin') {
+                    return navigateTo('/admin')
+                }
+
+                return navigateTo('/')
             } catch (error) {
                 reject(error)
             }

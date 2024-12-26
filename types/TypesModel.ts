@@ -16,8 +16,8 @@ export interface User {
 }
 
 export enum Role {
-    USER = 'User',
-    ADMIN = 'Admin',
+    USER = 'USER',
+    ADMIN = 'ADMIN',
 }
 
 // Ticket Type

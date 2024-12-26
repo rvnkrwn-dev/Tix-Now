@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         return {
             message: "Kategori berhasil dikembalikan.",
             data: {
-                getAllCategory
+                categories: getAllCategory
             },
             meta: {
                 totalPages,

@@ -64,12 +64,9 @@ export class Ticket {
         });
     };
 
-    // Fungsi untuk mengambil semua tiket
-    static getAllTickets = async (page: number, pagesize: number) => {
-        const skip = (page - 1) * pagesize; // Hitung data yang dilewatkan
-        const take = pagesize; // Jumlah data per halaman
-
-        return prisma.ticket.findMany({
+    static getTicketBySlug = (slug: string) => {
+        return prisma.ticket.findUnique({
+            where: { slug: slug },
             select: {
                 id: true,
                 slug: true,
@@ -85,6 +82,32 @@ export class Ticket {
                 publicId: true,
                 createdAt: true,
                 updatedAt: true,
+            },
+        });
+    };
+
+    // Fungsi untuk mengambil semua tiket
+    static getAllTickets = async (page: number, pagesize: number) => {
+        const skip = (page - 1) * pagesize; // Hitung data yang dilewatkan
+        const take = pagesize; // Jumlah data per halaman
+
+        return prisma.ticket.findMany({
+            select: {
+                id: true,
+                slug: true,
+                title: true,
+                description: true,
+                location: true,
+                dateTime: true,
+                stock: true,
+                price: true,
+                categoryId: false,
+                imageUrl: true,
+                secureUrl: true,
+                publicId: true,
+                createdAt: true,
+                updatedAt: true,
+                Category: true
             },
             skip: skip,
             take: take,
@@ -126,7 +149,7 @@ export class Ticket {
     static async getUpcomingTickets(page: number, pagesize: number, now: string) {
         const skip = (page - 1) * pagesize;
         const take = pagesize;
-        const sevenDaysLater = new Date(new Date(now).getTime() + 7 * 24 * 60 * 60 * 1000); // Sekarang + 7 hari
+        const sevenDaysLater = new Date(new Date(now).getTime() + 30 * 24 * 60 * 60 * 1000); // Sekarang + 30 hari
 
         return prisma.ticket.findMany({
             where: {
