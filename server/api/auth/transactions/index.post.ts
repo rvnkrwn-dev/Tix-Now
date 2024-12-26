@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
         const total_ticket = detailRequests.reduce((sum: number, detail: DetailTransactionRequest) => sum + detail.quantity, 0);
 
-        const transactionData: { total_ticket: number; total: number; user_id: any } = {
+        const transactionData: TransactionRequest = {
             user_id: user.id,
             total_ticket,
             total: 0,
