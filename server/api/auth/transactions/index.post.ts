@@ -1,5 +1,5 @@
 import {DetailTransactionRequest, LogRequest, TransactionRequest} from '~/types/AuthType';
-import {ActionLog, TransactionStatus} from '~/types/TypesModel';
+import {ActionLog} from '~/types/TypesModel';
 import {Transaction} from '~/server/model/Transaction';
 import { SendEmailTransaction } from '~/server/utils/SendEmailTransaction';
 
