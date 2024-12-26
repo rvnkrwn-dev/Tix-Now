@@ -1,7 +1,7 @@
 // Transactions.ts
 
 import {prisma} from '~/server/config/db';
-import {TransactionRequest, DetailTransactionRequest} from '~/types/AuthType';
+import {TransactionRequest, DetailTransactionRequest, TransactionUpdateStatus} from '~/types/AuthType';
 import {TransactionStatus} from "@prisma/client";
 import {SendEmailTransaction} from "~/server/utils/SendEmailTransaction";
 
@@ -84,13 +84,16 @@ export class Transaction {
     };
 
     // Fungsi untuk memperbarui status transaksi
-    static updateTransactionStatus = (id: number, status: TransactionStatus) => {
+    static updateTransactionStatus = (id: number, data: { secureUrl: any; imageUrl: any; publicId: any; status: any }) => {
         return prisma.transaction.update({
             where: {
                 id: id
             },
             data: {
-                status: status
+                status: data.status,
+                imageUrl: data.imageUrl,
+                secureUrl: data.secureUrl,
+                publicId: data.publicId
             },
         });
     };
@@ -136,4 +139,36 @@ export class Transaction {
     static countAllTransactions = () => {
         return prisma.transaction.count();
     };
+
+    // Fungsi untuk mengambil semua transaksi berdasarkan userId
+    static getAllTransactionsByUserId = async (userId: number, page: number, pagesize: number) => {
+        const skip = (page - 1) * pagesize; // Hitung data yang dilewatkan
+        const take = pagesize; // Jumlah data per halaman
+
+        return prisma.transaction.findMany({
+            where: {
+                userId: userId,
+            },
+            select: {
+                id: true,
+                userId: true,
+                totalTicket: true,
+                total: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
+                imageUrl: true,
+                secureUrl: true,
+                publicId: true,
+            },
+            skip: skip,
+            take: take,
+        });
+    };
+
+    static countAllTransactionsByUserId = async (userId: number) => {
+        return prisma.transaction.count({
+            where: {userId: userId},
+        })
+    }
 }

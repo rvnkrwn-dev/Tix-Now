@@ -1,4 +1,5 @@
 import { Transaction } from '~/server/model/Transaction';
+import {logger} from "@nuxt/kit";
 
 export default defineEventHandler(async (event) => {
     try {
@@ -6,16 +7,16 @@ export default defineEventHandler(async (event) => {
 
         if (!id || isNaN(id)) {
             setResponseStatus(event, 400);
-            return {code: 400, message: 'Pengguna tidak valid'};
+            return {code: 400, message: 'Id tidak valid'};
         }
 
-        const getCategory = await Transaction.getTransactionById(id);
+        const getTransaction = await Transaction.getTransactionById(id);
 
         setResponseStatus(event, 200);
         return {
             code: 200,
-            message: "Data transaksi berhasil dikembalikan",
-            data: getCategory,
+            message: "Transaksi berhasil dikembalikan",
+            data: getTransaction,
         };
     } catch (error: any) {
         return sendError(
