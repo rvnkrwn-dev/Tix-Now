@@ -21,7 +21,7 @@ export class Transaction {
             // Mengumpulkan detail transaksi dan operasi update stok dalam satu batch
             const detailData: any = [];
             const updateStockPromises = detailRequests.map(async (detailRequest) => {
-                const ticket = await prisma.ticket.findUnique({ where: { id: detailRequest.ticket_id } });
+                const ticket = await prisma.ticket.findUnique({where: {id: detailRequest.ticket_id}});
 
                 if (!ticket || ticket.stock < detailRequest.quantity) {
                     throw new Error(`Stok tidak cukup untuk tiket dengan ID: ${detailRequest.ticket_id}`);
@@ -34,8 +34,8 @@ export class Transaction {
                 });
 
                 return prisma.ticket.update({
-                    where: { id: detailRequest.ticket_id },
-                    data: { stock: ticket.stock - detailRequest.quantity },
+                    where: {id: detailRequest.ticket_id},
+                    data: {stock: ticket.stock - detailRequest.quantity},
                 });
             });
 
@@ -43,12 +43,12 @@ export class Transaction {
             await Promise.all(updateStockPromises);
 
             // Menambahkan detail transaksi dalam satu batch
-            await prisma.detailTransaction.createMany({ data: detailData });
+            await prisma.detailTransaction.createMany({data: detailData});
 
             // Menghitung total harga transaksi berdasarkan detail transaksi yang dibuat
             const details = await prisma.detailTransaction.findMany({
-                where: { transactionId: transaction.id },
-                include: { ticket: true },
+                where: {transactionId: transaction.id},
+                include: {ticket: true},
             });
 
             const total = details.reduce((sum, detail) => {
@@ -57,8 +57,8 @@ export class Transaction {
 
             // Update total transaksi
             const updatedTransaction = await prisma.transaction.update({
-                where: { id: transaction.id },
-                data: { total },
+                where: {id: transaction.id},
+                data: {total},
             });
 
             return updatedTransaction;
@@ -84,7 +84,12 @@ export class Transaction {
     };
 
     // Fungsi untuk memperbarui status transaksi
-    static updateTransactionStatus = (id: number, data: { secureUrl: any; imageUrl: any; publicId: any; status: any }) => {
+    static updateTransactionStatus = (id: number, data: {
+        secureUrl: any;
+        imageUrl: any;
+        publicId: any;
+        status: any
+    }) => {
         return prisma.transaction.update({
             where: {
                 id: id
@@ -129,6 +134,20 @@ export class Transaction {
                 status: true,
                 createdAt: true,
                 updatedAt: true,
+                imageUrl: true,
+                secureUrl: true,
+                publicId: true,
+                user: {
+                    select: {
+                        full_name: true,
+                    },
+                },
+                details: {
+                    select: {
+                        ticketId: true,
+                        quantity: true,
+                    },
+                },
             },
             skip: skip,
             take: take,
@@ -171,4 +190,65 @@ export class Transaction {
             where: {userId: userId},
         })
     }
+
+    // Fungsi untuk mencari transaksi berdasarkan beberapa kriteria
+    static searchTransactions = async (search: string) => {
+        const searchInt = parseInt(search);
+        const searchFloat = parseFloat(search);
+        const validStatuses = ['PENDING', 'COMPLETED', 'CANCELED'];
+
+        const transactions = await prisma.transaction.findMany({
+            where: {
+                OR: [
+                    {
+                        id: !isNaN(searchInt) ? searchInt : undefined,
+                    },
+                    {
+                        userId: !isNaN(searchInt) ? searchInt : undefined,
+                    },
+                    {
+                        status: validStatuses.includes(search.toUpperCase()) ? search.toUpperCase() as TransactionStatus : undefined,
+                    },
+                    {
+                        total: !isNaN(searchFloat) ? searchFloat : undefined,
+                    },
+                    {
+                        user: {
+                            full_name: {
+                                contains: search,
+                            },
+                        },
+                    },
+                ],
+            },
+            select: {
+                id: true,
+                userId: true,
+                totalTicket: true,
+                total: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
+                imageUrl: true,
+                secureUrl: true,
+                publicId: true,
+                user: {
+                    select: {
+                        full_name: true,
+                    },
+                },
+                details: {
+                    select: {
+                        ticketId: true,
+                        quantity: true,
+                    },
+                },
+            },
+        });
+        return transactions;
+    };
 }
+
+
+
+
