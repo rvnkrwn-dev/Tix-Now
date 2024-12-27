@@ -161,26 +161,44 @@ async function purchaseTicket() {
       ],
     };
 
+    const timeoutDuration = 50000; // Timeout duration dalam ms
+    const maxRetries = 3; // Maksimum percobaan ulang jika gagal
+
+    // Fungsi untuk melakukan request dengan retry logic
+    const fetchWithRetry = async (url, options, retries) => {
+      try {
+        return await useFetchApi(url, options);
+      } catch (error) {
+        if (retries <= 0) throw error; // Jika sudah maksimal retry, lempar error
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Tunggu 2 detik sebelum retry
+        return fetchWithRetry(url, options, retries - 1);
+      }
+    };
+
     // Membuat Promise untuk timeout
     const timeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Request timeout')), 20000)
+        setTimeout(() => reject(new Error('Request timeout')), timeoutDuration)
     );
 
     // Menggunakan Promise.race untuk menjalankan request dengan timeout
-    await Promise.race([
-      useFetchApi('/api/auth/transactions', {
+    const response = await Promise.race([
+      fetchWithRetry('/api/auth/transactions', {
         method: 'POST',
         body: payload,
-      }),
-      timeout, // Timeout jika lebih dari 20 detik
+      }, maxRetries),
+      timeout,
     ]);
 
+    // Jika berhasil, update stok dan tampilkan pesan sukses
     ticketData.value.stock -= quantity.value;
-    $toast("Tiket berhasil di booking tunggu pesan email berikutnya", "success");
+    $toast("Tiket berhasil di booking. Tunggu pesan email berikutnya.", "success");
+
   } catch (e) {
-    // Jika terjadi timeout atau error lainnya
+    // Menangani error timeout atau error lain
     if (e.message === 'Request timeout') {
       $toast("Proses transaksi membutuhkan waktu lebih lama dari yang diharapkan.", "error");
+    } else if (e.message === 'Network Error') {
+      $toast("Terjadi masalah jaringan. Coba lagi nanti.", "error");
     } else {
       $toast("Terjadi kesalahan saat memproses transaksi.", "error");
     }
