@@ -56,7 +56,7 @@
           :prevPage="prevPage"
           :nextPage="nextPage"
           :isLoading="isLoading"
-          :deleteAction="true"
+          :deleteAction="false"
           @fetchData="(e) => handleChangeFetchData(e)"
           @searchData="(e) => handleSearchData(e)"
           @deleteData="(e) => handleDeleteData(e)"

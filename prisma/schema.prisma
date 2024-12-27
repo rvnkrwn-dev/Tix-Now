@@ -38,9 +38,9 @@ model Ticket {
   stock              Int
   price              Float
   categoryId         Int
-  imageUrl           String
-  secureUrl          String
-  publicId           String
+  imageUrl           String?
+  secureUrl          String?
+  publicId           String?
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   Category           Category            @relation(fields: [categoryId], references: [id], onDelete: Cascade)

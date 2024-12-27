@@ -84,16 +84,16 @@ export class Transaction {
     };
 
     // Fungsi untuk memperbarui status transaksi
-    static updateTransactionStatus = (id: number, data: { secureUrl: any; imageUrl: any; publicId: any; status: any }) => {
+    static updateTransactionStatus = (id: number, data: { secureUrl: string; imageUrl: string; publicId: string; status: any }) => {
         return prisma.transaction.update({
             where: {
                 id: id
             },
             data: {
                 status: data.status,
-                imageUrl: data.imageUrl,
-                secureUrl: data.secureUrl,
-                publicId: data.publicId
+                imageUrl: data?.imageUrl,
+                secureUrl: data?.secureUrl,
+                publicId: data?.publicId
             },
         });
     };
