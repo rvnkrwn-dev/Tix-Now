@@ -1,5 +1,3 @@
-// Transactions.ts
-
 import {prisma} from '~/server/config/db';
 import {TransactionRequest, DetailTransactionRequest, TransactionUpdateStatus} from '~/types/AuthType';
 import {TransactionStatus} from "@prisma/client";
@@ -19,52 +17,46 @@ export class Transaction {
             });
 
             // Mengumpulkan detail transaksi dan operasi update stok dalam satu batch
-            const detailData: any = [];
-            const updateStockPromises = detailRequests.map(async (detailRequest) => {
-                const ticket = await prisma.ticket.findUnique({where: {id: detailRequest.ticket_id}});
+            const detailData = detailRequests.map(detailRequest => ({
+                transactionId: transaction.id,
+                ticketId: detailRequest.ticket_id,
+                quantity: detailRequest.quantity,
+            }));
+
+            // Memeriksa stok tiket dan melakukan update stok
+            for (const detailRequest of detailRequests) {
+                const ticket = await prisma.ticket.findUnique({ where: { id: detailRequest.ticket_id } });
 
                 if (!ticket || ticket.stock < detailRequest.quantity) {
                     throw new Error(`Stok tidak cukup untuk tiket dengan ID: ${detailRequest.ticket_id}`);
                 }
 
-                detailData.push({
-                    transactionId: transaction.id,
-                    ticketId: detailRequest.ticket_id,
-                    quantity: detailRequest.quantity,
+                await prisma.ticket.update({
+                    where: { id: detailRequest.ticket_id },
+                    data: { stock: ticket.stock - detailRequest.quantity },
                 });
-
-                return prisma.ticket.update({
-                    where: {id: detailRequest.ticket_id},
-                    data: {stock: ticket.stock - detailRequest.quantity},
-                });
-            });
-
-            // Menjalankan update stok secara paralel
-            await Promise.all(updateStockPromises);
+            }
 
             // Menambahkan detail transaksi dalam satu batch
-            await prisma.detailTransaction.createMany({data: detailData});
+            await prisma.detailTransaction.createMany({ data: detailData });
 
             // Menghitung total harga transaksi berdasarkan detail transaksi yang dibuat
-            const details = await prisma.detailTransaction.findMany({
-                where: {transactionId: transaction.id},
-                include: {ticket: true},
-            });
-
-            const total = details.reduce((sum, detail) => {
-                return sum + (detail.ticket.price * detail.quantity);
-            }, 0);
+            const total = detailRequests.reduce(async (sumPromise, detailRequest) => {
+                const sum = await sumPromise;
+                const ticket = await prisma.ticket.findUnique({ where: { id: detailRequest.ticket_id } });
+                return sum + (ticket.price * detailRequest.quantity);
+            }, Promise.resolve(0));
 
             // Update total transaksi
             const updatedTransaction = await prisma.transaction.update({
-                where: {id: transaction.id},
-                data: {total},
+                where: { id: transaction.id },
+                data: { total: await total },
             });
 
             return updatedTransaction;
         }, {
-            maxWait: 20000,  // Meningkatkan timeout menjadi 20 detik
-            timeout: 20000 // Menambah timeout secara eksplisit
+            maxWait: 100000,  // Meningkatkan timeout menjadi 100 detik
+            timeout: 100000   // Menambah timeout secara eksplisit
         });
     };
 
