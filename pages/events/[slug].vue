@@ -114,8 +114,9 @@
 </template>
 
 <script setup lang="ts">
-const {$toast} = useNuxtApp();
+const {isLoggedIn} = useAuth()
 
+const {$toast} = useNuxtApp();
 const {slug} = useRoute().params;
 const ticketData = ref<any>({});
 const loading = ref<boolean>(true);
@@ -148,7 +149,9 @@ function formatDate(dateTime: string) {
 
 async function purchaseTicket() {
   try {
+    if (!isLoggedIn().value) return navigateTo('/login');
     loading.value = true;
+
     const payload = {
       detailRequests: [
         {
@@ -156,15 +159,31 @@ async function purchaseTicket() {
           quantity: quantity.value,
         },
       ],
-    }
-    await useFetchApi('/api/auth/transactions', {
-      method: 'POST',
-      body: payload
-    });
+    };
 
+    // Membuat Promise untuk timeout
+    const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Request timeout')), 20000)
+    );
+
+    // Menggunakan Promise.race untuk menjalankan request dengan timeout
+    await Promise.race([
+      useFetchApi('/api/auth/transactions', {
+        method: 'POST',
+        body: payload,
+      }),
+      timeout, // Timeout jika lebih dari 20 detik
+    ]);
+
+    ticketData.value.stock -= quantity.value;
     $toast("Tiket berhasil di booking tunggu pesan email berikutnya", "success");
   } catch (e) {
-    $toast("Terjadi kesalahan saat memproses transaksi.", "error");
+    // Jika terjadi timeout atau error lainnya
+    if (e.message === 'Request timeout') {
+      $toast("Proses transaksi membutuhkan waktu lebih lama dari yang diharapkan.", "error");
+    } else {
+      $toast("Terjadi kesalahan saat memproses transaksi.", "error");
+    }
   } finally {
     loading.value = false;
   }
