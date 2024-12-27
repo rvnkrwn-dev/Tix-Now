@@ -24,6 +24,7 @@ export default defineEventHandler( async (event) => {
             '/api/auth/transactions/history?page=:page&pagesize=:pagesize',
             '/api/auth/transactions/:id',
             '/api/auth/transactions?page=:page&pagesize=:pagesize',
+            '/api/auth/transactions/search?q=:q',
         ]
 
         const isHandledByThisMiddleware = endpoints.some(endopoint => {
